@@ -1,0 +1,164 @@
+package clinic;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.google.gson.Gson;
+
+public class Main {
+	
+	public void writeintofile(ArrayList<Doctor> doctor, ArrayList<Patient> patients, ArrayList<Appoint> appoints)
+	{
+		JSONObject obj = new JSONObject();
+		obj.put("Doctors", doctor);
+		obj.put("Patients", patients);
+		obj.put("Appointment", appoints);
+		FileWriter file;
+		try {
+			file = new FileWriter("/home/bridgeit/Documents/Dhiresh/programs/Doctors111.json");
+			file.write(new Gson().toJson(obj));
+			file.flush();
+			file.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException, java.text.ParseException {
+		Scanner sc=new Scanner(System.in);
+
+		char ch2;
+	JSONParser parser = new JSONParser();
+	ArrayList<Doctor> doctorList = new ArrayList<Doctor>();
+	ArrayList<Patient> patientList = new ArrayList<Patient>();
+	ArrayList<Appoint> appointmentList = new ArrayList<Appoint>();
+
+	Object obj = parser.parse(new FileReader("/home/bridgeit/Documents/Dhiresh/programs/Doctors.json"));
+
+	// Creates a JSONObject
+	JSONObject JObj = (JSONObject) obj;
+	
+
+	// Creates the Array of data present in the file
+	JSONArray ArrayObj = (JSONArray) JObj.get("Doctors");
+	for (int i = 0; i < ArrayObj.size(); i++) {
+		JSONObject doctoyArray = (JSONObject) ArrayObj.get(i);
+		Doctor doctor = new Doctor();
+		doctor.setDoctorName(doctoyArray.get("name").toString());
+		doctor.setSpecializtion(doctoyArray.get("specializtion").toString());
+		doctor.setDoctorId(Integer.parseInt(doctoyArray.get("id").toString()));
+		doctor.setAvailability(doctoyArray.get("availability").toString());
+		doctorList.add(doctor);
+	}
+	ArrayObj = (JSONArray) JObj.get("Patients");
+	for (int i = 0; i < ArrayObj.size(); i++) {
+		JSONObject patientArray = (JSONObject) ArrayObj.get(i);
+		Patient patient = new Patient();
+		patient.setPatientName(patientArray.get("name").toString());
+		patient.setPatientId(Integer.parseInt(patientArray.get("id").toString()));
+		patient.setMobileNo(Long.parseLong(patientArray.get("mobile").toString()));
+		patient.setPatientAge(Integer.parseInt(patientArray.get("age").toString()));
+		patientList.add(patient);
+	}
+	ArrayObj = (JSONArray) JObj.get("Appointment");
+	for (int i = 0; i < ArrayObj.size(); i++) {
+		JSONObject appointArray = (JSONObject) ArrayObj.get(i);
+		Appoint appoint=new Appoint();
+		appoint.setDocId(Integer.parseInt(appointArray.get("docid").toString()));
+		appoint.setPatName(appointArray.get("patname").toString());
+		appoint.setPatMobile(Long.parseLong(appointArray.get("mobile").toString()));
+		appoint.setDate(appointArray.get("date").toString());
+		appointmentList.add(appoint);
+	}
+	Details d=new Details();
+	do
+	{
+		System.out.println(" Welcome to ClinicManagement System ");
+		System.out.println("Select Your Operation from the list of operations:");
+		System.out.println("1.Add Doctor");
+		System.out.println("2.Add Patient");
+		System.out.println("3.Print doctor");
+		System.out.println("4.Print Patients");
+		System.out.println("5.Take Appoinment");
+		System.out.println("6.Print Appoinment");
+		System.out.println("7.Search Doctor by name ,id or Availability");
+		System.out.println("8.Search Patients by name ,id ");
+		System.out.println("Enter Your Choice here ");
+		int choice=sc.nextInt();
+		switch(choice)
+		{
+		case 1:{
+			//call add Doctor function from Add all details class 
+			doctorList=d.addDoctor(doctorList);
+			new Main().writeintofile(doctorList,patientList,appointmentList);
+			break;
+		}
+		case 2:
+		{
+			//call add patient function to add all patient
+			patientList=d.addPatient(patientList);
+			new Main().writeintofile(doctorList,patientList,appointmentList);
+			break;
+		}
+		case 3:
+		{
+			//displays all doctor details
+			System.out.println("All doctor details are");
+			d.displayDoctor(doctorList);
+			break;
+		}
+		case 4:
+		{
+			//displays all patient details
+			System.out.println("All Patient details are");
+			d.displayPatient(patientList);
+			
+			break;
+		}
+		case 5:
+		{
+			//Schedule the appointment for the available doctors
+			appointmentList=new Appointment().scheduleAppointment(doctorList, patientList, appointmentList);
+			new Main().writeintofile(doctorList,patientList,appointmentList);
+			break;
+		}
+		case 6:
+		{
+			//Display the list of Appointments for the day
+			System.out.println("Apppointments are:");
+			d.displayApponitments(appointmentList);
+			break;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		default:
+			System.out.println("Your Have Entered invalid choice ");
+			break;
+		}System.out.println("Do you want to continue With Patient Search");
+		ch2=sc.next().toString().charAt(0);
+}while(ch2=='y' ||ch2=='Y');
+}
+}

@@ -1,0 +1,56 @@
+package clinic;
+
+import java.awt.List;
+import java.io.FileReader;
+import java.util.ArrayList;
+import com.google.gson.Gson;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+public class Doctordetails {
+	public static void main(String args[]) {
+		// creates the object of JSONParser class to Read the json file
+		JSONParser parser = new JSONParser();
+		try {
+			// Parse the String in file as JSON String
+			Object obj = parser.parse(new FileReader("/home/bridgeit/Documents/Dhiresh/programs/Doctors.json"));
+
+			// Creates a JSONObject
+			JSONObject JObj = (JSONObject) obj;
+			ArrayList<Doctor> doctorArray = new ArrayList<Doctor>();
+			// Creates the Array of data present in the file
+			JSONArray ArrayObj = (JSONArray) JObj.get("Doctors");
+			for (int i = 0; i < ArrayObj.size(); i++) {
+				JSONObject doctoyArray = (JSONObject) ArrayObj.get(i);
+				Doctor doctor = new Doctor();
+				doctor.setDoctorName(doctoyArray.get("name").toString());
+				doctor.setSpecializtion(doctoyArray.get("specializtion").toString());
+				doctor.setDoctorId(Integer.parseInt(doctoyArray.get("id").toString()));
+				doctor.setAvailability(doctoyArray.get("availability").toString());
+				doctorArray.add(doctor);
+			}
+			JSONArray ArrayObj = (JSONArray) JObj.get("Doctors");
+			for (int i = 0; i < ArrayObj.size(); i++) {
+				JSONObject doctoyArray = (JSONObject) ArrayObj.get(i);
+				Doctor doctor = new Doctor();
+				doctor.setDoctorName(doctoyArray.get("name").toString());
+				doctor.setSpecializtion(doctoyArray.get("specializtion").toString());
+				doctor.setDoctorId(Integer.parseInt(doctoyArray.get("id").toString()));
+				doctor.setAvailability(doctoyArray.get("availability").toString());
+				doctorArray.add(doctor);
+			}
+			System.out.println(doctorArray);
+			for (int i = 0; i < doctorArray.size(); i++) {
+				System.out.print(doctorArray.get(i).getDoctorName());
+			}
+			String json = new Gson().toJson(doctorArray);
+			System.out.println(json);
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}

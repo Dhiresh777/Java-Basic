@@ -1,0 +1,36 @@
+package com.clinic;
+
+import java.io.FileReader;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+public class Doctordetails {
+	public static void main(String args[]) {
+		// creates the object of JSONParser class to Read the json file
+		JSONParser parser = new JSONParser();
+		try {
+			// Parse the String in file as JSON String
+			Object obj = parser.parse(new FileReader("/home/bridgeit/Documents/Dhiresh/programs/Doctors.json"));
+
+			// Creates a JSONObject
+			JSONObject JObj = (JSONObject) obj;
+
+			// Creates the Array of data present in the file
+			JSONArray doctortArray = (JSONArray) JObj.get("Doctors");
+			for (int i=0;i<doctortArray.size();i++)
+			{
+			JSONObject Arrobject = (JSONObject) doctortArray.get(i);
+			Doctor doctor=new Doctor();
+			doctor.setDoctorName(Arrobject.get("name").toString());
+			System.out.println(doctor.getDoctorName());
+			doctor.setSpecializtion(Arrobject.get("").toString());
+			System.out.println(doctor.getSpecializtion());
+			doctor.setDoctorId(Integer.parseInt(Arrobject.get("id").toString()));
+			System.out.println(doctor.getDoctorId());
+			doctor.setAvailability(Arrobject.get("availability").toString());		
+			System.out.println(doctor.getAvailability());
+
+
+}}

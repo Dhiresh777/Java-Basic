@@ -1,0 +1,58 @@
+package clinic;
+
+import java.awt.List;
+import java.io.FileReader;
+import java.util.ArrayList;
+import com.google.gson.Gson;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+public class Doctordetails {
+	public static void main(String args[]) {
+		// creates the object of JSONParser class to Read the json file
+		JSONParser parser = new JSONParser();
+		try {
+			// Parse the String in file as JSON String
+			Object obj = parser.parse(new FileReader("/home/bridgeit/Documents/Dhiresh/programs/Doctors.json"));
+
+			// Creates a JSONObject
+			JSONObject JObj = (JSONObject) obj;
+			ArrayList<Doctor> doctorList = new ArrayList<Doctor>();
+			ArrayList<Patient> patientList = new ArrayList<Patient>();
+
+			// Creates the Array of data present in the file
+			JSONArray ArrayObj = (JSONArray) JObj.get("Doctors");
+			for (int i = 0; i < ArrayObj.size(); i++) {
+				JSONObject doctoyArray = (JSONObject) ArrayObj.get(i);
+				Doctor doctor = new Doctor();
+				doctor.setDoctorName(doctoyArray.get("name").toString());
+				doctor.setSpecializtion(doctoyArray.get("specializtion").toString());
+				doctor.setDoctorId(Integer.parseInt(doctoyArray.get("id").toString()));
+				doctor.setAvailability(doctoyArray.get("availability").toString());
+				doctorList.add(doctor);
+			}
+			for (int i = 0; i < doctorList.size(); i++) {
+				System.out.print(doctorList.get(i).getDoctorName());
+			}
+			JSONArray ArrayObj2 = (JSONArray) JObj.get("patients");
+			for (int i = 0; i < ArrayObj2.size(); i++) {
+				JSONObject patientArray = (JSONObject) ArrayObj2.get(i);
+				Patient patient = new Patient();
+				patient.setPatientName(patientArray.get("name").toString());
+				patient.setPatientId(Integer.parseInt(patientArray.get("specializtion").toString()));
+				patient.setMobileNo(Long.parseLong(patientArray.get("id").toString()));
+				patient.setPatientAge(Integer.parseInt(patientArray.get("availability").toString()));
+				patientList.add(patient);
+			}
+			
+			String json = new Gson().toJson(patientList);
+			System.out.println(json);
+		}
+
+		catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+}

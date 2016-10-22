@@ -1,0 +1,18 @@
+/*
+  file name:Schedule.java
+  Created by:Dhiresh Bhoir
+  Create Date:-19-10-2016
+  Purpose:Program for Task Scheduling
+*/
+package com.task;
+
+public class Schedule  {
+	int deadline = 0;
+	int min = 0;
+	int done = 0;
+
+	Schedule(int deadline, int min) {
+		this.deadline = deadline;
+		this.min = min;
+	}
+}

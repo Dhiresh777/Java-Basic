@@ -1,0 +1,42 @@
+package clinic;
+
+import java.awt.List;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import com.google.gson.Gson;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+public class Details {
+		
+		//Function to displayDoctor Details
+		public void displayDoctor(ArrayList<Doctor> doc) {
+			for (Doctor doctor : doc) {
+				System.out.println("Doctor Name: " + doctor.getDoctorName() + " "
+						+ "Doctor Id : " + doctor.getDoctorId() + " "
+						+ " Specializtion : " + doctor.getSpecializtion() + " "
+						+ " Availability : " + doctor.getAvailability());
+			}
+	
+		}
+		// function to Display the Patient details
+		public void displayPatient(ArrayList<Patient> pat)
+		{ 
+			for (Patient patient : pat)
+			{
+				System.out.println("Patient Name is: " + patient.getPatientName()
+						+ " " + "PatientId is: " + patient.getPatientId() + " "
+						+ " " + "Patient Mobile no : " + patient.getMobileNo()
+						+ " " + " Patient age is : " + patient.getPatientAge());
+			}
+		}
+}	
+
+
+//		String json = new Gson().toJson(patientList);
+//		System.out.println(json);
+

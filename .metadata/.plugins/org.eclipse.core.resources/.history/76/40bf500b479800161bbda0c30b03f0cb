@@ -1,0 +1,17 @@
+public class Computer1 extends Player{
+    
+    public Computer1(int player){
+        super(player);
+        System.out.println("Player 'Computer' created");
+    }
+    
+    @Override
+    public void play(Board board){
+        
+    }
+    
+    @Override
+    public void Try(Board board){
+        
+    }
+}

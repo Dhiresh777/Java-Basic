@@ -1,0 +1,52 @@
+package com.binary;
+
+public class BinaryTreeNode {
+		BinaryTreeNode left, right;
+		int data;
+
+		/* Constructor */
+		public BinaryTreeNode() {
+			left = null;
+			right = null;
+			data = 0;
+		}
+		/* Constructor */
+		public BinaryTreeNode(int n) {
+
+			left = null;
+			right = null;
+			data = n;
+		}
+
+		/* Function to set left node */
+		public void setLeft(BinaryTreeNode n) {
+			left = n;
+		}
+
+		/* Function to set right node */
+		public void setRight(BinaryTreeNode n) {
+			right = n;
+		}
+
+		/* Function to get left node */
+		public BinaryTreeNode getLeft() {
+			return left;
+		}
+
+		/* Function to get right node */
+		public BinaryTreeNode getRight() {
+			return right;
+		}
+
+		/* Function to set data to node */
+		public void setData(int d) {
+			data = d;
+		}
+
+		/* Function to get data from node */
+		public int getData() {
+			return data;
+		}
+	}
+
+
